@@ -39,6 +39,7 @@
     "react-icons": "^4.2.0",
     "react-toastify": "^10.0.5",
     "sass": "^1.42.0",
+    "sharp": "^0.33.3",
     "uuid": "^8.2.0",
     "yup": "^0.32.8"
   },
@@ -83,7 +84,11 @@
     "@fortawesome/fontawesome-common-types",
     "@fortawesome/fontawesome-svg-core",
     "@fortawesome/free-solid-svg-icons",
+    "bufferutil",
     "protobufjs",
-    "tiny-secp256k1"
+    "secp256k1",
+    "sharp",
+    "tiny-secp256k1",
+    "utf-8-validate"
   ]
 }
