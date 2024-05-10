@@ -5,6 +5,12 @@ import 'styles/asteroid.scss'
 import 'styles/rarity-card.scss'
 import './../src/styles.css'
 
+import "@interchain-ui/react/styles";
+
+import { ChainProvider } from '@cosmos-kit/react';
+import { chains, assets } from 'chain-registry';
+import { wallets } from '@cosmos-kit/keplr';
+
 import { ThemeProvider as EmotionThemeProvider } from '@emotion/react'
 import { CssBaseline } from '@mui/material'
 import { StylesProvider, ThemeProvider as MaterialThemeProvider } from '@mui/styles'
@@ -20,12 +26,19 @@ import { GlobalSpinner } from 'views/common/GlobalSpinner'
 import { Navbar } from 'views/common/Navbar'
 import { WalletProvider, StaticWalletProvider } from '@terra-money/wallet-provider'
 import { Networks, walletConnectChainIds } from 'constants/networks'
-import ReactGA from 'react-ga'
 
-if (typeof window !== 'undefined') {
-  ReactGA.initialize(process.env.NEXT_PUBLIC_GA)
-  ReactGA.pageview(window.location.pathname + window.location.search)
-}
+import { wallets as keplrWallets } from "@cosmos-kit/keplr";
+import { wallets as xdefiWallets } from "@cosmos-kit/xdefi";
+
+// import { ChainProvider } from "@cosmos-kit/react-lite";
+// import { assets, chains } from "chain-registry";
+
+// import ReactGA from 'react-ga'
+
+// if (typeof window !== 'undefined') {
+//   ReactGA.initialize(process.env.NEXT_PUBLIC_GA)
+//   ReactGA.pageview(window.location.pathname + window.location.search)
+// }
 
 const TerraWalletProvider = ({ children }) => {
   const isBrowser = typeof window !== 'undefined'
@@ -59,6 +72,13 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
         <MaterialThemeProvider theme={theme}>
           <EmotionThemeProvider theme={theme}>
             <TerraWalletProvider>
+                  <ChainProvider
+      chains={chains} // supported chains
+      assetLists={assets} // supported asset lists
+      wallets={wallets} // supported wallets
+      walletConnectOptions={} // required if `wallets` contains mobile wallets
+    >
+
               <CssBaseline />
               <GlobalSpinner />
               <GlobalDialog />
@@ -73,6 +93,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
               <Navbar>
                 <Component {...pageProps} />
               </Navbar>
+              </ChainProvider>
             </TerraWalletProvider>
           </EmotionThemeProvider>
         </MaterialThemeProvider>
