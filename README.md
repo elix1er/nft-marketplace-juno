@@ -1,10 +1,10 @@
-# Backbone Labs - Necropolis (NFT Marketplace)
+# Moon Tech Labs - Juno (NFT Marketplace)
 
 We have modified this smart contract to fix some issues we found in the source code.  Mostly fixing warnings but some small logic changes related to the royalty_fee setting. 
 
-The deployed code to mainnet is `Code ID 1399` with hash `9c9ab88769c974e89a846977b499c5afe065c44b8e4bf67006c9e323d978bbe4`
+The deployed code to mainnet is `Code ID ####` with hash `####`
 
-We instantiated that code and the contract address for Necropolis is `terra1ej4cv98e9g2zjefr5auf2nwtq4xl3dm7x0qml58yna2ml2hk595s7gccs9`
+We instantiated that code and the contract address for Juno Marketplace is `####`
 
 ## Knowhere Marketplace
 
