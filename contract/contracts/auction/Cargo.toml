@@ -33,6 +33,7 @@ backtraces = ["cosmwasm-std/backtraces"]
 [dependencies]
 cosmwasm-std = { version = "1.0.0", features = ["stargate"] }
 cosmwasm-storage = { version = "1.0.0"  }
+cosmwasm-schema = "^1.2"
 schemars = "0.8.10"
 serde = { version = "1.0.137", default-features = false, features = ["derive"] }
 thiserror = { version = "1.0.31" }
