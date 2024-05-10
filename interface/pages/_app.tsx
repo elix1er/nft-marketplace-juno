@@ -76,7 +76,7 @@ const CustomApp = ({ Component, pageProps }: AppProps) => {
       chains={chains} // supported chains
       assetLists={assets} // supported asset lists
       wallets={wallets} // supported wallets
-      walletConnectOptions={} // required if `wallets` contains mobile wallets
+      // walletConnectOptions={} // required if `wallets` contains mobile wallets
     >
 
               <CssBaseline />
