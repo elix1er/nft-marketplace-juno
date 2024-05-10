@@ -106,7 +106,7 @@ const NftButton = ({
             onClick={goToAuction}
           >
             <Box style={{ marginTop: '-10px' }}>
-              <FontAwesomeIcon icon={faExternalLinkAlt} />
+              {/* <FontAwesomeIcon icon={faExternalLinkAlt} /> */}
             </Box>
           </button>
           <button
