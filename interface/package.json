@@ -10,6 +10,9 @@
     "lint": "eslint . --ext .ts"
   },
   "dependencies": {
+    "@cosmos-kit/core": "^2.10.0",
+    "@cosmos-kit/keplr": "^2.8.0",
+    "@cosmos-kit/react": "^2.12.0",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
@@ -21,8 +24,10 @@
     "@terra-dev/wallet-types": "^2.0.0",
     "@terra-money/terra.js": "^3.1.2",
     "@terra-money/wallet-provider": "^3.9.4",
+    "add": "^2.0.6",
     "axios": "^0.21.1",
     "big.js": "^6.1.1",
+    "chain-registry": "^1.47.2",
     "cross-env": "^7.0.3",
     "dayjs": "^1.10.7",
     "delay": "^5.0.0",
