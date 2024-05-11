@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "InstantiateMsg",
+  "title": "ConfigResponse",
   "type": "object",
   "required": [
     "accepted_denom",
@@ -10,6 +10,7 @@
     "max_royalty_fee",
     "min_increment",
     "min_reserve_price",
+    "owner",
     "protocol_fee"
   ],
   "properties": {
@@ -40,6 +41,9 @@
     },
     "min_reserve_price": {
       "$ref": "#/definitions/Uint128"
+    },
+    "owner": {
+      "type": "string"
     },
     "protocol_fee": {
       "$ref": "#/definitions/Decimal"

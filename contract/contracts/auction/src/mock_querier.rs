@@ -1,6 +1,6 @@
 use cosmwasm_std::testing::{MockApi, MockQuerier, MockStorage, MOCK_CONTRACT_ADDR};
 use cosmwasm_std::{
-    from_binary, from_slice, to_binary, Addr, Api, Coin, ContractResult, Decimal, Empty, OwnedDeps,
+    from_json, to_json_binary, Addr, Api, Coin, ContractResult, Decimal, Empty, OwnedDeps,
     Querier, QuerierResult, QueryRequest, SystemError, SystemResult, Uint128, WasmQuery,
 };
 use cw721::{Cw721QueryMsg, OwnerOfResponse};
@@ -44,7 +44,7 @@ impl NftQuerier {
 impl Querier for WasmMockQuerier {
     fn raw_query(&self, bin_request: &[u8]) -> QuerierResult {
         // MockQuerier doesn't support Custom, so we ignore it completely here
-        let request: QueryRequest<Empty> = match from_slice(bin_request) {
+        let request: QueryRequest<Empty> = match from_json(bin_request) {
             Ok(v) => v,
             Err(e) => {
                 return SystemResult::Err(SystemError::InvalidRequest {
@@ -61,12 +61,12 @@ impl WasmMockQuerier {
     pub fn handle_query(&self, request: &QueryRequest<Empty>) -> QuerierResult {
         match &request {
             QueryRequest::Wasm(WasmQuery::Smart { contract_addr, msg }) => {
-                match from_binary(msg).unwrap() {
+                match from_json(msg).unwrap() {
                     Cw721QueryMsg::OwnerOf { token_id, .. } => {
                         let nft_owners = self.nft_querier.owners.get(contract_addr).unwrap();
                         let owner = nft_owners.get(&token_id).unwrap();
                         SystemResult::Ok(ContractResult::Ok(
-                            to_binary(&OwnerOfResponse {
+                            to_json_binary(&OwnerOfResponse {
                                 owner: owner.clone(),
                                 approvals: vec![],
                             })
@@ -89,12 +89,12 @@ impl WasmMockQuerier {
         }
     }
 
-    // configure the token owner mock querier
-    pub fn with_balance(&mut self, balances: &[(String, &[Coin])]) {
-        for (addr, balance) in balances {
-            self.base.update_balance(addr, balance.to_vec());
-        }
-    }
+    // // configure the token owner mock querier
+    // pub fn with_balance(&mut self, balances: &[(String, &[Coin])]) {
+    //     for (addr, balance) in balances {
+    //         self.base.update_balance(addr, balance.to_vec());
+    //     }
+    // }
 
     // configure owner of nft
     pub fn with_nft_owner(&mut self, nft_address: String, token_id: String, owner: String) {

@@ -1,6 +1,6 @@
 use std::str::FromStr;
 use cosmwasm_std::{
-    entry_point, from_binary, to_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response,
+    entry_point, from_json, to_json_binary, Binary, Deps, DepsMut, Env, MessageInfo, Response,
     StdError, StdResult, Uint128, Decimal
 };
 use cw721::Cw721ReceiveMsg;
@@ -113,7 +113,7 @@ pub fn receive_nft(
     info: MessageInfo,
     cw721_msg: Cw721ReceiveMsg,
 ) -> Result<Response, ContractError> {
-    match from_binary(&cw721_msg.msg) {
+    match from_json(&cw721_msg.msg) {
         Ok(Cw721HookMsg::CreateAuction {
                denom,
                reserve_price,
@@ -142,21 +142,21 @@ pub fn receive_nft(
 #[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
     match msg {
-        QueryMsg::Config {} => to_binary(&query_config(deps)?),
-        QueryMsg::State {} => to_binary(&query_state(deps)?),
-        QueryMsg::Auction { auction_id } => to_binary(&query_auction(deps, auction_id)?),
+        QueryMsg::Config {} => to_json_binary(&query_config(deps)?),
+        QueryMsg::State {} => to_json_binary(&query_state(deps)?),
+        QueryMsg::Auction { auction_id } => to_json_binary(&query_auction(deps, auction_id)?),
         QueryMsg::RoyaltyFee { contract_addr } => {
-            to_binary(&query_royalty_fee(deps, contract_addr)?)
+            to_json_binary(&query_royalty_fee(deps, contract_addr)?)
         }
-        QueryMsg::RoyaltyAdmin { address } => to_binary(&query_royalty_admin(deps, address)?),
+        QueryMsg::RoyaltyAdmin { address } => to_json_binary(&query_royalty_admin(deps, address)?),
         QueryMsg::AllRoyaltyFee { start_after, limit } => {
-            to_binary(&query_all_royalty(deps, start_after, limit)?)
+            to_json_binary(&query_all_royalty(deps, start_after, limit)?)
         }
         QueryMsg::CalculatePrice {
             nft_contract,
             token_id,
             amount,
-        } => to_binary(&query_calculate_price(
+        } => to_json_binary(&query_calculate_price(
             deps,
             nft_contract,
             token_id,
@@ -165,21 +165,21 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
         QueryMsg::NftAuction {
             nft_contract,
             token_id,
-        } => to_binary(&query_nft_auction_map(deps, nft_contract, token_id)?),
+        } => to_json_binary(&query_nft_auction_map(deps, nft_contract, token_id)?),
         QueryMsg::BidHistoryByAuctionId { auction_id, limit } => {
-            to_binary(&query_bid_history_by_auction_id(deps, auction_id, limit)?)
+            to_json_binary(&query_bid_history_by_auction_id(deps, auction_id, limit)?)
         }
-        QueryMsg::BidsCount { auction_id } => to_binary(&query_bid_number(deps, auction_id)?),
+        QueryMsg::BidsCount { auction_id } => to_json_binary(&query_bid_number(deps, auction_id)?),
         QueryMsg::AuctionByContract {
             nft_contract,
             limit,
         } => {
             let auction_ids = query_auction_by_nft(deps, nft_contract, limit)?;
-            to_binary(&construct_action_response(deps, auction_ids)?)
+            to_json_binary(&construct_action_response(deps, auction_ids)?)
         }
         QueryMsg::AuctionBySeller { seller, limit } => {
             let auction_ids = query_auction_by_seller(deps, seller, limit)?;
-            to_binary(&construct_action_response(deps, auction_ids)?)
+            to_json_binary(&construct_action_response(deps, auction_ids)?)
         }
         QueryMsg::AuctionByEndTime {
             nft_contract,
@@ -189,7 +189,7 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
         } => {
             let auction_ids =
                 query_auction_by_end_time(deps, nft_contract, end_time, limit, is_desc)?;
-            to_binary(&construct_action_response(deps, auction_ids)?)
+            to_json_binary(&construct_action_response(deps, auction_ids)?)
         }
         QueryMsg::AuctionByAmount {
             nft_contract,
@@ -197,7 +197,7 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
             limit,
         } => {
             let auction_ids = query_auction_by_amount(deps, nft_contract, amount, limit)?;
-            to_binary(&construct_action_response(deps, auction_ids)?)
+            to_json_binary(&construct_action_response(deps, auction_ids)?)
         }
         QueryMsg::NotStartedAuction {
             nft_contract,
@@ -207,7 +207,7 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
         } => {
             let auction_ids =
                 query_not_started_auctions(deps, nft_contract, start_after, limit, is_desc)?;
-            to_binary(&construct_action_response(deps, auction_ids)?)
+            to_json_binary(&construct_action_response(deps, auction_ids)?)
         }
         QueryMsg::AuctionByBidder {
             bidder,
@@ -215,7 +215,7 @@ pub fn query(deps: Deps, _env: Env, msg: QueryMsg) -> StdResult<Binary> {
             limit,
         } => {
             let auction_ids = query_auction_by_bidder(deps, bidder, start_after, limit)?;
-            to_binary(&construct_action_response(deps, auction_ids)?)
+            to_json_binary(&construct_action_response(deps, auction_ids)?)
         }
     }
 }

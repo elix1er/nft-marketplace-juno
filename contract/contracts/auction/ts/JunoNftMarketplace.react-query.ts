@@ -4,5 +4,5 @@
 * and run the @cosmwasm/ts-codegen generate command to regenerate this file.
 */
 
-import { Decimal, Uint128, InstantiateMsg, ExecuteMsg, Binary, Cw721ReceiveMsg } from "./JunoMarketplace.types";
-import "./JunoMarketplace.client";
+import { Decimal, Uint128, InstantiateMsg, ExecuteMsg, Binary, Cw721ReceiveMsg } from "./JunoNftMarketplace.types";
+import "./JunoNftMarketplace.client";

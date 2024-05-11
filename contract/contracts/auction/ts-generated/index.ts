@@ -4,12 +4,12 @@
 * and run the @cosmwasm/ts-codegen generate command to regenerate this file.
 */
 
-import * as _0 from "./JunoNftMarketplace.types";
-import * as _1 from "./JunoNftMarketplace.client";
-import * as _2 from "./JunoNftMarketplace.message-composer";
-import * as _3 from "./JunoNftMarketplace.react-query";
+import * as _0 from "./JunoNftMarketplaceX.types";
+import * as _1 from "./JunoNftMarketplaceX.client";
+import * as _2 from "./JunoNftMarketplaceX.message-composer";
+import * as _3 from "./JunoNftMarketplaceX.react-query";
 export namespace contracts {
-  export const JunoNftMarketplace = {
+  export const JunoNftMarketplaceX = {
     ..._0,
     ..._1,
     ..._2,

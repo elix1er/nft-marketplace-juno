@@ -1,28 +1,53 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "InstantiateMsg",
+  "title": "AuctionResponse",
   "type": "object",
   "required": [
-    "accepted_denom",
-    "collector_address",
+    "amount",
+    "auction_id",
+    "auction_type",
+    "denom",
     "duration",
+    "end_time",
     "extension_duration",
-    "max_royalty_fee",
-    "min_increment",
-    "min_reserve_price",
-    "protocol_fee"
+    "is_settled",
+    "nft_contract",
+    "reserve_price",
+    "royalty_fee",
+    "seller",
+    "token_id"
   ],
   "properties": {
-    "accepted_denom": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
+    "amount": {
+      "$ref": "#/definitions/Uint128"
     },
-    "collector_address": {
+    "auction_id": {
+      "$ref": "#/definitions/Uint128"
+    },
+    "auction_type": {
+      "$ref": "#/definitions/AuctionType"
+    },
+    "bidder": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "creator_address": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "denom": {
       "type": "string"
     },
     "duration": {
+      "type": "integer",
+      "format": "uint64",
+      "minimum": 0.0
+    },
+    "end_time": {
       "type": "integer",
       "format": "uint64",
       "minimum": 0.0
@@ -32,21 +57,34 @@
       "format": "uint64",
       "minimum": 0.0
     },
-    "max_royalty_fee": {
-      "$ref": "#/definitions/Decimal"
+    "is_settled": {
+      "type": "boolean"
     },
-    "min_increment": {
-      "$ref": "#/definitions/Decimal"
+    "nft_contract": {
+      "type": "string"
     },
-    "min_reserve_price": {
+    "reserve_price": {
       "$ref": "#/definitions/Uint128"
     },
-    "protocol_fee": {
+    "royalty_fee": {
       "$ref": "#/definitions/Decimal"
+    },
+    "seller": {
+      "type": "string"
+    },
+    "token_id": {
+      "type": "string"
     }
   },
   "additionalProperties": false,
   "definitions": {
+    "AuctionType": {
+      "type": "string",
+      "enum": [
+        "auction",
+        "buy_now"
+      ]
+    },
     "Decimal": {
       "description": "A fixed-point decimal value with 18 fractional digits, i.e. Decimal(1_000_000_000_000_000_000) == 1.0\n\nThe greatest possible value that can be represented is 340282366920938463463.374607431768211455 (which is (2^128 - 1) / 10^18)",
       "type": "string"

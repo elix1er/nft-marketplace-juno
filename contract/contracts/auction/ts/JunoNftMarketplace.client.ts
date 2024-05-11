@@ -6,8 +6,8 @@
 
 import { Coin, StdFee } from "@cosmjs/amino";
 import { SigningCosmWasmClient, ExecuteResult } from "@cosmjs/cosmwasm-stargate";
-import { Decimal, Uint128, InstantiateMsg, ExecuteMsg, Binary, Cw721ReceiveMsg } from "./JunoMarketplace.types";
-export interface JunoMarketplaceInterface {
+import { Decimal, Uint128, InstantiateMsg, ExecuteMsg, Binary, Cw721ReceiveMsg } from "./JunoNftMarketplace.types";
+export interface JunoNftMarketplaceInterface {
   contractAddress: string;
   sender: string;
   receiveNft: ({
@@ -86,7 +86,7 @@ export interface JunoMarketplaceInterface {
     tokenId: string;
   }, fee?: number | StdFee | "auto", memo?: string, _funds?: Coin[]) => Promise<ExecuteResult>;
 }
-export class JunoMarketplaceClient implements JunoMarketplaceInterface {
+export class JunoNftMarketplaceClient implements JunoNftMarketplaceInterface {
   client: SigningCosmWasmClient;
   sender: string;
   contractAddress: string;

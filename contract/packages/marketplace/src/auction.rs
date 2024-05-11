@@ -1,10 +1,15 @@
+// use cosmwasm_schema::{cw_serde, QueryResponses};
+
+use cosmwasm_schema::QueryResponses;
+use cosmwasm_schema::cw_serde;
+
 use cosmwasm_std::{Addr, Decimal, Uint128};
 use cw721::Cw721ReceiveMsg;
-use schemars::JsonSchema;
-use serde::{Deserialize, Serialize};
+// use schemars::JsonSchema;
+// use serde::{Deserialize, Serialize};
 use std::fmt;
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct InstantiateMsg {
     pub protocol_fee: Decimal,
     pub min_increment: Decimal,
@@ -19,8 +24,7 @@ pub struct InstantiateMsg {
 /// This is like Cw721HandleMsg but we add a Mint command for an owner
 /// to make this stand-alone. You will likely want to remove mint and
 /// use other control logic in any contract that inherits this.
-#[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub enum ExecuteMsg {
     ReceiveNft(Cw721ReceiveMsg),
     CancelAuction {
@@ -68,65 +72,83 @@ pub enum ExecuteMsg {
 /// This is like Cw721HandleMsg but we add a Mint command for an owner
 /// to make this stand-alone. You will likely want to remove mint and
 /// use other control logic in any contract that inherits this.
-#[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
-#[serde(rename_all = "snake_case")]
+
+
+#[cw_serde]
+#[derive(QueryResponses)]
 pub enum QueryMsg {
+    #[returns(ConfigResponse)]
     Config {},
+    #[returns(StateResponse)]
     State {},
+    #[returns(AuctionResponse)]
     Auction {
         auction_id: Uint128,
     },
+    #[returns(RoyaltyFeeResponse)]
     RoyaltyFee {
         contract_addr: String,
     },
+    #[returns(RoyaltyAdminResponse)]
     RoyaltyAdmin {
         address: String,
     },
+    #[returns(AllRoyaltyListResponse)]
     AllRoyaltyFee {
         start_after: Option<String>,
         limit: Option<u32>,
     },
+    #[returns(CalculatePriceResponse)]
     CalculatePrice {
         nft_contract: String,
         token_id: String,
         amount: Uint128,
     },
+    #[returns(AuctionResponse)]
     NftAuction {
         nft_contract: String,
         token_id: String,
     },
+    #[returns(BidHistoryByAuctionIdResponse)]
     BidHistoryByAuctionId {
         auction_id: Uint128,
         limit: Option<u32>,
     },
+    #[returns(AuctionResponse)]
     BidsCount {
         auction_id: Uint128,
     },
+    #[returns(AuctionListResponse)]
     AuctionByContract {
         nft_contract: String,
         limit: Option<u32>,
     },
+    #[returns(AuctionListResponse)]
     AuctionBySeller {
         seller: String,
         limit: Option<u32>,
     },
+    #[returns(AuctionListResponse)]
     AuctionByAmount {
         nft_contract: String,
         amount: Uint128,
         limit: Option<u32>,
     },
+    #[returns(AuctionListResponse)]
     AuctionByEndTime {
         nft_contract: String,
         end_time: u64,
         limit: Option<u32>,
         is_desc: Option<bool>,
     },
+    #[returns(AuctionListResponse)]
     NotStartedAuction {
         nft_contract: String,
         start_after: Option<u128>,
         limit: Option<u32>,
         is_desc: Option<bool>,
     },
+    #[returns(AuctionListResponse)]
     AuctionByBidder {
         bidder: String,
         start_after: Option<u128>,
@@ -134,47 +156,47 @@ pub enum QueryMsg {
     },
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct Royalty {
     pub royalty_fee: Decimal,
     pub creator: Addr,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct RoyaltyResponse {
     pub royalty_fee: Decimal,
     pub creator: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct RoyaltyAdminResponse {
     pub address: String,
     pub enable: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct RoyaltyFeeResponse {
     pub royalty_fee: Option<RoyaltyResponse>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct AllRoyaltyResponse {
     pub contract_addr: String,
     pub royalty_fee: Decimal,
     pub creator: String,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct AllRoyaltyListResponse {
     pub royalty_fees: Vec<AllRoyaltyResponse>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct BidHistoryByAuctionIdResponse {
     pub bids: Vec<Bid>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct ConfigResponse {
     pub owner: String,
     pub protocol_fee: Decimal,
@@ -187,23 +209,23 @@ pub struct ConfigResponse {
     pub max_royalty_fee: Decimal,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct StateResponse {
     pub next_auction_id: Uint128,
     pub is_freeze: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct AuctionListResponse {
     pub auctions: Vec<AuctionResponse>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct BidCountResponse {
     pub count: Uint128,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct AuctionResponse {
     pub auction_id: Uint128,
     pub auction_type: AuctionType,
@@ -222,7 +244,7 @@ pub struct AuctionResponse {
     pub is_settled: bool,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct CalculatePriceResponse {
     pub nft_contract: String,
     pub token_id: String,
@@ -232,7 +254,7 @@ pub struct CalculatePriceResponse {
     pub seller_amount: Uint128,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct Bid {
     pub auction_id: Uint128,
     pub bidder: Addr,
@@ -241,8 +263,7 @@ pub struct Bid {
     pub amount: Uint128,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub enum AuctionType {
     Auction,
     BuyNow,
@@ -257,8 +278,7 @@ impl fmt::Display for AuctionType {
     }
 }
 
-#[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
-#[serde(rename_all = "snake_case")]
+#[cw_serde]
 pub enum Cw721HookMsg {
     CreateAuction {
         denom: String,
@@ -267,5 +287,5 @@ pub enum Cw721HookMsg {
     },
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug, PartialEq, JsonSchema)]
+#[cw_serde]
 pub struct MigrateMsg {}
