@@ -1,0 +1,422 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QueryMsg",
+  "oneOf": [
+    {
+      "description": "Returns the current balance of the given address, 0 if unset.",
+      "type": "object",
+      "required": [
+        "balance_of"
+      ],
+      "properties": {
+        "balance_of": {
+          "type": "object",
+          "required": [
+            "owner",
+            "token_id"
+          ],
+          "properties": {
+            "owner": {
+              "type": "string"
+            },
+            "token_id": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Returns the current balance of the given address for a batch of tokens, 0 if unset.",
+      "type": "object",
+      "required": [
+        "balance_of_batch"
+      ],
+      "properties": {
+        "balance_of_batch": {
+          "type": "object",
+          "required": [
+            "owner",
+            "token_ids"
+          ],
+          "properties": {
+            "owner": {
+              "type": "string"
+            },
+            "token_ids": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Query approved status `owner` granted to `operator`.",
+      "type": "object",
+      "required": [
+        "is_approved_for_all"
+      ],
+      "properties": {
+        "is_approved_for_all": {
+          "type": "object",
+          "required": [
+            "operator",
+            "owner"
+          ],
+          "properties": {
+            "operator": {
+              "type": "string"
+            },
+            "owner": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Return approvals that a token owner has",
+      "type": "object",
+      "required": [
+        "token_approvals"
+      ],
+      "properties": {
+        "token_approvals": {
+          "type": "object",
+          "required": [
+            "owner",
+            "token_id"
+          ],
+          "properties": {
+            "include_expired": {
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "owner": {
+              "type": "string"
+            },
+            "token_id": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "List all operators that can access all of the owner's tokens.",
+      "type": "object",
+      "required": [
+        "approvals_for_all"
+      ],
+      "properties": {
+        "approvals_for_all": {
+          "type": "object",
+          "required": [
+            "owner"
+          ],
+          "properties": {
+            "include_expired": {
+              "description": "unset or false will filter out expired approvals, you must set to true to see them",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "limit": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "owner": {
+              "type": "string"
+            },
+            "start_after": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Returns all current balances of the given token id. Supports pagination",
+      "type": "object",
+      "required": [
+        "all_balances"
+      ],
+      "properties": {
+        "all_balances": {
+          "type": "object",
+          "required": [
+            "token_id"
+          ],
+          "properties": {
+            "limit": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "start_after": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "token_id": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Total number of tokens issued",
+      "type": "object",
+      "required": [
+        "supply"
+      ],
+      "properties": {
+        "supply": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Total number of tokens issued for the token id",
+      "type": "object",
+      "required": [
+        "num_tokens"
+      ],
+      "properties": {
+        "num_tokens": {
+          "type": "object",
+          "required": [
+            "token_id"
+          ],
+          "properties": {
+            "token_id": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "With MetaData Extension. Returns top-level metadata about the contract.",
+      "type": "object",
+      "required": [
+        "contract_info"
+      ],
+      "properties": {
+        "contract_info": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Query Minter.",
+      "type": "object",
+      "required": [
+        "minter"
+      ],
+      "properties": {
+        "minter": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "With MetaData Extension. Query metadata of token",
+      "type": "object",
+      "required": [
+        "token_info"
+      ],
+      "properties": {
+        "token_info": {
+          "type": "object",
+          "required": [
+            "token_id"
+          ],
+          "properties": {
+            "token_id": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "With Enumerable extension. Requires pagination. Lists all token_ids controlled by the contract.",
+      "type": "object",
+      "required": [
+        "all_token_info"
+      ],
+      "properties": {
+        "all_token_info": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "start_after": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "With Enumerable extension. Returns all tokens owned by the given address, [] if unset.",
+      "type": "object",
+      "required": [
+        "tokens"
+      ],
+      "properties": {
+        "tokens": {
+          "type": "object",
+          "required": [
+            "owner"
+          ],
+          "properties": {
+            "limit": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "owner": {
+              "type": "string"
+            },
+            "start_after": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "With Enumerable extension. Requires pagination. Lists all token_ids controlled by the contract.",
+      "type": "object",
+      "required": [
+        "all_tokens"
+      ],
+      "properties": {
+        "all_tokens": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "start_after": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Extension query",
+      "type": "object",
+      "required": [
+        "extension"
+      ],
+      "properties": {
+        "extension": {
+          "type": "object",
+          "required": [
+            "msg"
+          ],
+          "properties": {
+            "msg": {
+              "$ref": "#/definitions/Empty"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Query the contract's ownership information",
+      "type": "object",
+      "required": [
+        "ownership"
+      ],
+      "properties": {
+        "ownership": {
+          "type": "object",
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  ],
+  "definitions": {
+    "Empty": {
+      "description": "An empty struct that serves as a placeholder in different places, such as contracts that don't set a custom message.\n\nIt is designed to be expressable in correct JSON and JSON Schema but contains no meaningful data. Previously we used enums without cases, but those cannot represented as valid JSON Schema (https://github.com/CosmWasm/cosmwasm/issues/451)",
+      "type": "object"
+    }
+  }
+}

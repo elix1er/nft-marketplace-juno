@@ -142,3 +142,5 @@ temp/
 
 .vercel
 .DS_Store
+.aider*
+bkup.js

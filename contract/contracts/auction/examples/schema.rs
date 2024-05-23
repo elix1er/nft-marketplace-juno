@@ -1,6 +1,6 @@
 use cosmwasm_schema::write_api;
 
-use marketplace::auction::{Cw721HookMsg, ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
+use marketplace::auction::{ ExecuteMsg, InstantiateMsg, MigrateMsg, QueryMsg};
 
 // use cw2981_royalties::{QueryMsg};
 
