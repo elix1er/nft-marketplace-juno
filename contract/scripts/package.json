@@ -1,17 +1,20 @@
 {
-  "name": "scripts",
+  "name": "nft-scripts",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT",
+  "license": "WTFPL",
+  "scripts": {
+    "start": "ts-node src/codegen.ts"
+  },
   "dependencies": {
+    "@cosmwasm/ts-codegen": "^1.10.0",
     "@terra-money/terra.js": "^3.1.1",
     "axios": "^0.21.1",
     "dotenv": "^9.0.2",
-    "ts-node": "^9.1.1"
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@types/dotenv": "^8.2.0",
-    "ts-node": "^9.1.1",
-    "typescript": "^4.2.4"
+    "typescript": "^5.4.5"
   }
 }
