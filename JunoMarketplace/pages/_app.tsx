@@ -6,7 +6,7 @@ import { SignerOptions } from "@cosmos-kit/core";
 import { wallets as keplrWallets } from "@cosmos-kit/keplr-extension";
 import { wallets as leapWallets } from "@cosmos-kit/leap-extension";
 
-import { ChainProvider, walletContext } from "@cosmos-kit/react";
+import { ChainProvider, useChain, walletContext } from "@cosmos-kit/react";
 
 import { assets, chains } from 'chain-registry'
 import { getSigningCosmosClientOptions } from 'interchain'
@@ -22,7 +22,9 @@ import { Chain } from '@chain-registry/types'
 import { GasPrice } from '@cosmjs/stargate'
 import { juno } from "juno-network";
 import { wallets } from "cosmos-kit";
+import { ContractsProvider } from "@/contracts/JMarketplace/contracts-context";
 
+import { CHAIN_MARKETPLACE_ADDRESS} from '@/config/defaults'
 function CreateCosmosApp({ Component, pageProps }: AppProps) {
   
   const { themeClass } = useTheme();
@@ -41,13 +43,14 @@ function CreateCosmosApp({ Component, pageProps }: AppProps) {
     //   }
     // },
   }
-
+  
   return (
     <ThemeProvider>
       <ChainProvider
         endpointOptions={{
           endpoints: {
             juno: {
+              isLazy: true,
               rpc: ['https://juno-rpc.polkachu.com']
             }
           }
@@ -71,8 +74,8 @@ function CreateCosmosApp({ Component, pageProps }: AppProps) {
         // @ts-ignore
         signerOptions={signerOptions}
       >
+        
           {/* TODO fix type error */}
-
           <Component {...pageProps} />
 
       </ChainProvider>

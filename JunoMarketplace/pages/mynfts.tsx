@@ -22,6 +22,7 @@ export default function Home() {
     const { wallet, address, status } = useChain('juno');
     const { getStargateClient, getCosmWasmClient } = useChain("juno");
     
+    
     // let nftMarketComposer = new JunoNftMarketplaceMsgComposer(address,marketplaceAddr);
     
     
