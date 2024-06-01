@@ -3,7 +3,6 @@ import { Fragment } from "react";
 import { Disclosure, DisclosureButton, Menu, Transition } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Wallet } from "@/components/wallet/Wallet";
-import LogoAnimation from "./LogoAnimation";
 
 // Utility function to join class names conditionally
 function classNames(...classes: string[]) {
@@ -36,8 +35,6 @@ export default function TailwindUiNavBar() {
               <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                 <div className="flex items-center">
                   <div className="bg-darkbg">
-
-
                     <div className=" flex items-center justify-center">
                       <h1 className="text-6xl font-bold text-junopink">JunøX</h1>
                     </div>
@@ -45,7 +42,6 @@ export default function TailwindUiNavBar() {
 
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
-
                   {/* Navigation links */}
                   <a
                     href="#"

@@ -3,12 +3,8 @@ import { Divider } from "@interchain-ui/react";
 import { LayoutBase, Wallet } from "@/components";
 import { ExploreCollections, DetailView } from "@/components";
 import { useChain, useChainWallet, useChains, useWallet, useWalletClient } from "@cosmos-kit/react";
-import { useJunoNftMarketplaceXStateQuery } from '@/config/ts/a/JunoNftMarketplaceX.react-query'
-import { JunoNftMarketplaceXQueryClient } from '@/config/ts/a/JunoNftMarketplaceX.client'
 import { SigningStargateClient, StdFee } from "@cosmjs/stargate";
 import { useEffect, useState } from "react";
-
-import { JunoNftMarketplaceXMsgComposer } from "@/config/ts/a/JunoNftMarketplaceX.message-composer";
 
 function parseMultihash(payload: string) {
     if (payload) {
@@ -55,8 +51,8 @@ export default function MyNftsView(collections: any) {
 
     const [collectionsResolved, setCollectionsResolved] = useState([]);
 
-    // let nftMarketComposer = new JunoNftMarketplaceMsgComposer(address,marketplaceAddr);
     
+    // Yes its a mess, working version is on another laptop on another branch not yet pushed to git, if u curious and really reading this rn. 
     useEffect(() => {
         console.log(address);
         getCosmWasmClient().then((client) => {
@@ -124,7 +120,7 @@ export default function MyNftsView(collections: any) {
                 { JSON.stringify(col) }
                 <img className="aspect-[3/2] w-full rounded-2xl object-cover" src={col.token_data?.imageUrl } alt="" />
                 <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">{col.name}</h3>
-                <p className="text-base text-sm leading-7 text-gray-600">{col.collectionAddress.substr(0,12) + '...'}</p>
+                <p className="text-sm leading-7 text-gray-600">{col.collectionAddress.substr(0,12) + '...'}</p>
                 <ul role="list" className="mt-6 flex gap-x-6">
                   <li>
                     <a href={col.xUrl} className="text-gray-400 hover:text-gray-500">
