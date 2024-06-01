@@ -1,92 +1,70 @@
-import { Divider } from "@interchain-ui/react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { LayoutBase, Wallet } from "@/components";
-import { ExploreCollections, DetailView } from "@/components";
-import { CHAIN_MARKETPLACE_ADDRESS } from "@/config";
-import { useChain, useChainWallet, useChains, useWallet, useWalletClient } from "@cosmos-kit/react";
+import { useChain } from "@cosmos-kit/react";
+import { StdFee } from "@cosmjs/stargate";
+import { LayoutBase, ExploreCollection } from "@/components";
+import { useWalletContext } from "@/context/walletContext";
+import { CHAIN_MARKETPLACE_ADDRESS, CHAIN_NAME } from "@/config/defaults";
 
+// import { JMarketplaceMsgComposer } from "@/contracts/JMarketplace/JMarketplace.message-composer";
 
-import { useJunoNftMarketplaceXNotStartedAuctionQuery, useJunoNftMarketplaceXAuctionQuery, useJunoNftMarketplaceXAuctionByContractQuery, useJunoNftMarketplaceXStateQuery } from '@/config/ts/a/JunoNftMarketplaceX.react-query'
-import { contracts } from '@/config/ts/a/index'
-import { SigningStargateClient, StdFee } from "@cosmjs/stargate";
-import { JunoNftMarketplaceMsgComposer } from "@/config/ts/b/JunoNftMarketplace.message-composer";
-import { JunoNftMarketplaceClient } from "@/config/ts/b/JunoNftMarketplace.client";
+const fee: StdFee = {
+  amount: [
+    {
+      denom: "ujuno",
+      amount: "1",
+    },
+  ],
+  gas: "526432", // TODO: make this dynamic. high gas like this for auction settlement. normally lower.
+};
 
-const { JunoNftMarketplaceXClient, JunoNftMarketplaceXMsgComposer, JunoNftMarketplaceXQueryClient } = contracts.JunoNftMarketplaceX;
+export default function CollectionView() {
 
+  const router = useRouter();
+  const { addr } = router.query;
 
-import { useEffect } from "react";
-import { CosmWasmClient } from "@cosmjs/cosmwasm-stargate";
+  const {
+    wallet,
+    address,
+    balance,
+    jMarketplaceClient,
+    jMarketplaceQueryClient,
+  } = useWalletContext();
 
-// import { TokensQuery,  } from "@/config/721";
-export default function Home() {
-    
-    const router = useRouter();
-    const collectionAddr = router.query.addr;
+  const [configResult, setConfigResult] = useState<any>(null);
+  // TODO: set/get this for a single NFT auction, not in collection overview
+  const [bidHistory, setBidHistory] = useState<any>(null); 
 
-    const { wallet, address} = useChain('juno');
-    const { getCosmWasmClient, getStargateClient } = useChain("juno");
+  useEffect(() => {
+    const fetchData = async () => {
+      if (jMarketplaceClient && address) {
+        const config = await jMarketplaceClient.config(); // reading contract state from maretplace contract
+        const bidHistoryByAuctionId = await jMarketplaceClient.bidHistoryByAuctionId({auctionId:"2" }); // reading contract state from maretplace contract
+        
+        setConfigResult(config);
+        console.table(config);
 
+        setBidHistory(bidHistoryByAuctionId);
+        console.table(bidHistoryByAuctionId);
 
-    useEffect(() => {
-        // getCosmWasmClient().then((client: CosmWasmClient) => {
+        // const blabla =  await jMarketplaceClient.placeBid({auctionId:"2"},fee,'token1zin', [{denom: "ujuno", amount: "1337000"}]);
+        // const blabla = await jMarketplaceClient.settle({auctionId:"2"},fee);
 
-        //     const junoClient = new JunoNftMarketplaceXQueryClient(client, CHAIN_MARKETPLACE_ADDRESS);
-        //     const { data } = useJunoNftMarketplaceXStateQuery({ client: junoClient });
-        //     console.log(data);
+            // manually craft a message, leave for now as a reference
+        
+        // let myEncoder = new JMarketplaceMsgComposer(address, 'juno144sv7x7rqv9q3fvwn8hwhnsjq3g4eugnazf5m5kr6hjw52aj7auq7s7uyf');
+        // myEncoder.placeBid({auctionId: "2"}, [{denom: "ujuno", amount: "1000000"}])
 
-        // });
+      }
+    };
+    fetchData();
+  }, [jMarketplaceClient]);
 
-
-        // const fetchCollections = async () => {
-            try {
-
-                //     const junoClient = new JunoNftMarketplaceXQueryClient(client, CHAIN_MARKETPLACE_ADDRESS);
-                //     const { data } = useJunoNftMarketplaceXAuctionByContractQuery({ client: junoClient, contract: collectionAddr });
-                //     console.log(data);
-                // });
-
-                // if (address) {
-                //     let nftMarketComposer = new JunoNftMarketplaceMsgComposer(address, CHAIN_MARKETPLACE_ADDRESS);
-                //     const { data } = useJunoNftMarketplaceXAuctionQuery({ client: junoClient });
-
-                    // nftMarketComposer.
-                // }
-
-    //             const response = await fetch("https://indexer.daodao.zone/batch", {
-    //                 headers: {
-    //                     "accept": "*/*",
-    //                     "content-type": "application/json",
-    //                 },
-    //                 body: JSON.stringify([`/juno-1/wallet/${address}/nft/collections?`]),
-    //                 method: "POST",
-    //             });
-
-    //             const data = await response.json();
-    //             const collections = JSON.parse(data[0].body);
-
-    //             for (const collection of collections) {
-    //                 if (collection) {
-    //                     const response = await client.queryContractSmart(collection.collectionAddress, { num_tokens: {} });
-    //                     console.log(response);
-    //                 }
-    //             }
-            } catch (error) {
-                console.error("Error fetching collections:", error);
-            }
-        // };
-
-        // if (address) {
-        //     fetchCollections();
-        // }
-    }, [address, getCosmWasmClient]);
-
-
-    return (
-        <LayoutBase>
-            {/* <Wallet /> */}
-            {/* <Divider mb="$16" /> */}
-            <ExploreCollections />
-        </LayoutBase>
-    );
+  return (
+    <>
+      {/* {JSON.stringify({ wallet, address, balance }, null, 2)}
+      <pre>{JSON.stringify(configResult, null, 2)}</pre> */}
+      <ExploreCollection  />
+    </>
+  );
 }

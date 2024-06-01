@@ -1,18 +1,11 @@
 import { Divider } from "@interchain-ui/react";
 import { LayoutBase, Wallet } from "@/components";
-import { ExploreCollections, DetailView } from "@/components"
+import { ReactNode } from "react";
 
-export default function Home() {
+export default function Index({ children }: { children: ReactNode }) {
   return (
-    <LayoutBase>
-      <>
-      </>
-      
-      {/* <Wallet /> */}
-      {/* <DetailView/> */}
-      {/* <Divider mb="$16" />E */}
-      {/* <ExploreCollections/> */}
-
-    </LayoutBase>
+    <>
+      {children}
+    </>
   );
 }

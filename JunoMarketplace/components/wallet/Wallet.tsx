@@ -27,9 +27,6 @@ import {
   ButtonRejected,
 } from "./Connect";
 
-import { JunoNftMarketplaceXMsgComposer } from '../../config/ts/a/JunoNftMarketplaceX.message-composer'
-import { QueryMsg } from '../../config/ts/a/JunoNftMarketplaceX.types'
-
 import { SigningStargateClient, StdFee } from "@cosmjs/stargate";
 import { assets } from "chain-registry";
 
@@ -73,8 +70,6 @@ export function Wallet() {
     username,
     address,
     message,
-    // getSigningStargateClient,
-    getSigningCosmWasmClient,
     connect,
     openView,
   } = useChain('juno');

@@ -3,7 +3,6 @@ import React from "react";
 import { ChevronRightIcon, HomeIcon } from "@heroicons/react/20/solid";
 import NftInfo from "./NftInfo";
 
-
 export const TraitsView = ({ traits }: { traits: { category: string, value: string }[] }) => {
     return (
         <div>
@@ -23,23 +22,22 @@ export const TraitsView = ({ traits }: { traits: { category: string, value: stri
 export const DetailView = () => {
 
     const pages = [
-        { name: "Collections", href: "#", current: false },
-        { name: "Mad Scientists", href: "#", current: false },
-        { name: "Mad Scientist #1", href: "#", current: true },
-      ];
+      { name: "Collections", href: "#", current: false },
+      { name: "Mad Scientists", href: "#", current: false },
+      { name: "Mad Scientist #1", href: "#", current: true },
+    ];
       
-
     const traitsData = [
-        { category: 'Eyes & Eyewear', value: 'NBK' },
-        { category: 'Outfit', value: 'Diagonal' },
-        { category: 'Origin', value: 'Chalk' },
-        { category: 'Background', value: 'Oceanographer' },
-        { category: 'Head & Headwear', value: 'Intellectual' },
-        { category: 'Mouth', value: 'Haircomb Stache' },
+      { category: 'Eyes & Eyewear', value: 'NBK' },
+      { category: 'Outfit', value: 'Diagonal' },
+      { category: 'Origin', value: 'Chalk' },
+      { category: 'Background', value: 'Oceanographer' },
+      { category: 'Head & Headwear', value: 'Intellectual' },
+      { category: 'Mouth', value: 'Haircomb Stache' },
     ];
         
   return (
-    <div className="bg-gray-900 text-white font-sans min-h-screen">
+    <div className=" text-white font-sans min-h-screen">
       <div className="container mx-auto p-4">
         <div className=" flex items-start">
           {/* Left Section */}
@@ -91,6 +89,7 @@ export const DetailView = () => {
 
           {/* Right Section */}
             <div className="ml-8 mt-8 bg-gray-800 p-6 rounded-lg shadow-lg">
+
             <NftInfo
                 title="Mad Scientist #1"
                 owner="juno10vzkd8pyme67z38epdr3gf027y03dxq78tvausfp3r28vkks7mwse02j8f"
