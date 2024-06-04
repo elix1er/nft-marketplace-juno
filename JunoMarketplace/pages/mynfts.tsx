@@ -8,7 +8,7 @@ export default function Home() {
     
     const router = useRouter();
     const collectionAddr = router.query.addr;
-    const [collections, setCollections] = useState([]);
+    const [collections, setCollections] = useState({collections: [], stakedCollections: []});
 
     const { wallet, address, status } = useChain('juno');
     const { getStargateClient, getCosmWasmClient } = useChain("juno");    
@@ -27,8 +27,8 @@ export default function Home() {
                 "referrer": "https://daodao.zone/",
                 "referrerPolicy": "strict-origin-when-cross-origin",
                 "body": JSON.stringify([
-                    "/juno-1/wallet/" + address + "/nft/collections?"
-                    // "/juno-1/wallet/" + address + "/nft/stakedWithDaos?",
+                    "/juno-1/wallet/" + address + "/nft/collections?",
+                    "/juno-1/wallet/" + address + "/nft/stakedWithDaos?",
                 ]),
                 "method": "POST",
                 "mode": "cors",
@@ -38,10 +38,12 @@ export default function Home() {
             }).then((data) => {
 
                 let dataCollections = JSON.parse(data[0].body);
-                // let dataCollectionsStaked = JSON.parse(data[1].body);
-                // setCollections([...dataCollections, ...dataCollectionsStaked]);
+                let dataCollectionsStaked = JSON.parse(data[1].body);
+                
+                setCollections({collections: dataCollections, stakedCollections: dataCollectionsStaked});
                 setCollections(dataCollections);
-                console.log('DAODAO Indexer Response', dataCollections);
+
+                console.log('DAODAO Indexer Response', dataCollectionsStaked);
             });
         });
     }, [address, getCosmWasmClient]);  

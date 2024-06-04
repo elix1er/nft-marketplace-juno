@@ -17,7 +17,6 @@ export function LayoutBase({ children }: { children: React.ReactNode }) {
       </Head>
       {
         /* 
-        
           <ContractsProvider contractsConfig={{
             address: context.address,
             getCosmWasmClient: context.getCosmWasmClient,

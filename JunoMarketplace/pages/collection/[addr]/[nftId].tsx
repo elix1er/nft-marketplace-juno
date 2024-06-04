@@ -45,6 +45,8 @@ export default function SingleNftView() {
             { token_info: { token_id: nftId } }
           );
 
+          console.table(token_info)
+
           const auctionByContract = await jMarketplaceClient.auctionByContract({
             nftContract: addr.toString(),
           });
