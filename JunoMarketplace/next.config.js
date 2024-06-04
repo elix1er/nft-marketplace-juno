@@ -22,9 +22,21 @@ const nextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        //nftstorage.link
+        protocol: 'https',
+        hostname: 'nftstorage.link',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'gateway.pinata.cloud',
+        port: '',
+        pathname: '/**'
+      }
     ],
   },
-
 }
 
 module.exports = nextConfig
